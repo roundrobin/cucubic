@@ -1,0 +1,156 @@
+!!! 5
+%html
+  %head
+    %title three.js canvas - geometry - cube
+      
+    %link{:type=>"text/css", :href=>"/development-bundle/themes/base/jquery.ui.all.css", :rel=>"stylesheet"}
+    %link{:type=>"text/css", :href=>"/css/style.css", :rel=>"stylesheet"}    
+    %script{:type=>"text/javascript", :src=>"js/jquery-1.6.2.min.js"}
+    %script{:type=>"text/javascript", :src=>"development-bundle/ui/jquery.ui.core.js"}
+    %script{:type=>"text/javascript", :src=>"development-bundle/ui/jquery.ui.widget.js"}
+    %script{:type=>"text/javascript", :src=>"development-bundle/ui/jquery.ui.mouse.js"}
+    %script{:type=>"text/javascript", :src=>"development-bundle/ui/jquery.ui.draggable.js"}
+    %script{:type=>"text/javascript", :src=>"development-bundle/ui/jquery.ui.droppable.js"}
+    %script{:type=>"text/javascript", :src=>"development-bundle/ui/jquery.ui.sortable.js"}
+    %script{:type=>"text/javascript", :src=>"js/main.js"}
+  %body
+    %button
+      Kamera drehen
+    %button
+      Headlines ausblenden
+    %button
+      Scheibe ausblenden
+    %button
+      Texturen ausblenden
+    %select
+      %option
+        Cube auswählen
+    %button
+      Query speichern
+    %button
+      CVS Export
+    %a{:href=> "/testwiese"}
+      Testwiese
+    %a{:href=> "/cube"}
+      Cube  
+    %input{:type=>"range", :value=>"0", :min=>"0", :max=>"100", :onchange=>"mesh.morphTargetInfluences[ 4 ] = this.value/100;"}  
+      
+    %script{:type=>"text/javascript", :src=>"../Three.js"}
+    %script{:type=>"text/javascript", :src=>"../js/RequestAnimationFrame.js"}
+    %script{:type=>"text/javascript", :src=>"../js/Stats.js"}
+    %script{:type=>"text/javascript", :src=>"../js/three_helper.js"}  
+    :javascript
+      var container, stats;
+      var camera, scene, renderer;
+      var cube, plane;
+      var targetRotation = 0;
+      var targetRotationOnMouseDown = 0;
+      var mouseX = 0;
+      var mouseXOnMouseDown = 0;
+      var canvasWidth = 1200;
+      var canvasHeight = 800;
+      var windowHalfX = canvasWidth / 2;
+      var windowHalfY = canvasHeight / 2;
+      var textureNames = [];
+      
+      init();
+      animate();
+      
+
+      
+      function init() {
+        container = document.createElement( 'div' );
+        document.body.appendChild( container );
+
+        camera = new THREE.Camera( 70, canvasWidth/ canvasHeight, 1, 10000 );
+        camera.position.y = -100;
+        camera.position.z = 3000;
+        camera.target.position.y = -150;
+
+        scene = new THREE.Scene();
+
+
+        
+
+        
+        //createTable(columnHeadings, rowHeadings, values);
+
+        renderer = new THREE.WebGLRenderer();
+        renderer.setSize( canvasWidth, canvasHeight );
+        renderer.domElement.style.border = "2px solid black";
+        container.appendChild( renderer.domElement );
+
+        stats = new Stats();
+        stats.domElement.style.position = 'absolute';
+        stats.domElement.style.top = '0px';
+        container.appendChild( stats.domElement );
+
+        //document.addEventListener( 'mousedown', onDocumentMouseDown, false );
+        //document.addEventListener( 'touchstart', onDocumentTouchStart, false );
+        //document.addEventListener( 'touchmove', onDocumentTouchMove, false );
+        
+        console.log(textureNames);
+      }
+      
+    #QB 
+      %b Query builder
+      %hr
+      %div
+        %b Columns
+        .dimensionDropArea
+          %ul#QBDropListCol.connectedSortable
+            %li{:class=> "defaultItem ui-state-disabled"}
+      %div
+        %b Rows
+        .dimensionDropArea
+          %ul#QBDropListRow.connectedSortable
+            %li{:class=> "defaultItem ui-state-disabled"}
+      %div  
+        %b Pages
+        .dimensionDropArea
+          %ul#QBDropListPages.connectedSortable
+            %li{:class=> "defaultItem ui-state-disabled"}
+      %div
+        %br
+        %button{:value => "Show Result", :id=>"sendCall"}
+          Run
+     
+    #navigator
+      %b Navigator
+      %hr
+      - @dimensions.each_with_index do |dimension,index1|
+        %b
+          = dimension.name
+        %ul.dimensionList.connectedSortable1{:class=>"list#{index1}"}
+          - dimension.hierarchies.each do |hierachy|
+            - hierachy.root_members.each do |root_member|
+              %li{:style=>"1",:data => { :list => "list#{index1}", :dimension=>"#{dimension.name}", :rootmember=>"#{root_member.name}"}}
+                %span
+                  = root_member.name
+                %span.cancelButton
+                  x
+                    
+                 
+    %div{:style=>"padding:50px;background-color:#ffffff;width:50%;float:left;"}
+      %h1
+        
+      .result
+      %table{:border => "1", :id => "oldTable"}
+        %tr
+          %td
+            Alle Jahre
+          - @columnNames.each do |col|
+            %td
+              =col
+        - @values.each_with_index do |val,index|
+          %tr
+            %td
+              =@rowNames[index]
+            - val.each do |va|
+              %td
+                %span
+                  = va.to_s
+  
+
+
+ 

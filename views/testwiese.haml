@@ -1,0 +1,46 @@
+!!! 5
+%html
+  %head
+    %title three.js canvas - geometry - cube
+      
+    %link{:type=>"text/css", :href=>"/development-bundle/themes/base/jquery.ui.all.css", :rel=>"stylesheet"}
+    %link{:type=>"text/css", :href=>"/css/style.css", :rel=>"stylesheet"}    
+    %script{:type=>"text/javascript", :src=>"js/main.js"}
+  %body
+    %button
+      Kamera drehen
+    %button
+      CVS Export
+    %a{:href=> "/"}
+      zurück
+    %script{:type=>"text/javascript", :src=>"../Three.js"}
+    %script{:type=>"text/javascript", :src=>"../js/RequestAnimationFrame.js"}
+    %script{:type=>"text/javascript", :src=>"../js/Stats.js"}
+    %script{:type=>"text/javascript", :src=>"../js/three_helper.js"}  
+    :javascript
+      var container, stats, camera, scene, renderer, cube, plane;
+      var targetRotation = 0; var targetRotationOnMouseDown = 0; var mouseX = 0; var mouseXOnMouseDown = 0;
+      var canvasWidth = 1200;
+      var canvasHeight = 800;
+      var windowHalfX = canvasWidth / 2;
+      var windowHalfY = canvasHeight / 2;
+      init();
+      animate();
+      function init() {
+        container = document.createElement( 'div' );
+        document.body.appendChild( container );
+
+        camera = new THREE.Camera( 60, canvasWidth/ canvasHeight, 1, 10000 );
+        camera.position.y = -100;
+        camera.position.z = 3000;
+        camera.target.position.y = -150;
+        scene = new THREE.Scene();
+
+        renderer = new THREE.WebGLRenderer();
+        renderer.setSize( canvasWidth, canvasHeight );
+        renderer.domElement.style.border = "2px solid black";
+        container.appendChild( renderer.domElement );
+
+      }
+    #QB
+      test

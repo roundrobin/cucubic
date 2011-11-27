@@ -1,0 +1,80 @@
+canvas {
+	float: none;
+}
+body {
+	font-family: Arial;
+	background-color: #F1EFD8;
+	margin: 0px;
+	user-select: none;
+	-moz-user-select: -moz-none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;
+   user-select: none;
+	
+}
+
+ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	margin-bottom: 10px;
+	font-size: 10px;
+}
+
+ul li {
+	margin: 5px;
+	padding: 5px;
+	list-style-type: none;
+	border-radius: 10px;
+	background-color: #00919D;
+}
+.dimensionDropArea {
+	background-color: white;
+	border: 1px dashed grey;
+}
+.dimensionDropArea li {
+	background-color: white;
+}
+li.QBItem {
+	background-color: #5DCEC6;
+	border: 1px solid #2A6085;
+	font-size: 12px;
+}
+#QB li {
+	background-color: #5DCEC6;
+	border: 1px solid #2A6085;
+}
+#QB li.defaultItem {
+	background-color: white;
+	border: 0px;
+	font-size: 12px;
+}
+#QB {
+	float: right;
+	margin-right: 30px;
+	background-color: #4C8066;
+	padding: 10px;
+	width: 200px;
+	height: 100%;
+}
+.cancelButton {
+	float: right;
+	display: none;
+}
+#navigator {
+	float: right;
+	margin-right: 30px;
+	background-color: #00665E;
+	padding: 10px;
+	width: 200px;
+	height: 100%;
+}
+#QBDropListRow ul, #QBDropListCol ul, #QBDropListRow ul {
+	background-color: white;
+}
+.dimensionList, #measureList {
+	background-color: #00665E;
+}
+ul#QBDropListCol.connectedSortable li.defaultItem {
+	display: list-item;
+}

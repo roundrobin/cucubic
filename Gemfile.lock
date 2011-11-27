@@ -1,0 +1,15 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+
+
+DEPENDENCIES
+  haml
+  jruby-openssl
+  json
+  mondrian-olap
+  mysql2
+  sinatra
+  trinidad
+  mysql
+  mysql2

@@ -1,0 +1,219 @@
+!!! 5
+%html
+  %head
+    %title
+      three.js canvas - geometry - cube
+    :css
+      body {
+        font-family: Monospace;
+        background-color: #f0f0f0;
+        margin: 0px;
+        overflow: hidden;
+      }
+  %body
+    
+     
+    #navigator{:style=>"float: right;margin-right: 30px;background-color: red;padding: 10px;"}
+      %h1
+        Navigator
+      - @dimensions.each do |dimension|
+        = dimension.name.to_s+"<br />"
+        - dimension.hierarchies.each do |hierachy|
+          - hierachy.level_names.each do |level|
+            = "-->"+level.to_s+"<br>"
+
+    %script{:type=>"text/javascript", :src=>"../Three.js"}
+    %script{:type=>"text/javascript", :src=>"../js/RequestAnimationFrame.js"}
+    %script{:type=>"text/javascript", :src=>"../js/Stats.js"}
+    :javascript
+      var container, stats;
+      var camera, scene, renderer;
+      var cube, plane;
+      var targetRotation = 0;
+      var targetRotationOnMouseDown = 0;
+      var mouseX = 0;
+      var mouseXOnMouseDown = 0;
+      var canvasWidth = 1000;
+      var canvasHeight = 800;
+      var windowHalfX = canvasWidth / 2;
+      var windowHalfY = canvasHeight / 2;
+      var textureNames = [];
+      
+      init();
+      animate();
+      
+      function createCanvasTexture(text){
+        
+
+        for (var i = 0; i < textureNames.length; i++) {
+          if( textureNames[i]["name"] == text ){
+             return textureNames[i]["texture"];
+          }
+        }
+        
+        
+        var canvas2     = document.createElement("canvas");
+        canvas2.id      = "number";
+        canvas2.style.width = "100px";
+        canvas2.style.height = "100px";
+        var context     = canvas2.getContext("2d");
+        var x           = canvas2.width / 2; var y = canvas2.height / 2;
+        context.font    = "50pt Arial";
+        color = 130;
+        context.textAlign = "center";
+        context.fillStyle = "#889988";
+        context.fillRect(0,0,300,300);
+  
+          // assign gradients to fill
+          //context.fillStyle = objGradient;
+  
+          // draw 600x600 fill
+          context.fillRect(0,0,600,600);
+          context.fillStyle = "black";
+          context.fillText(text+"", x, y);
+          context.save();
+        
+
+        //document.body.appendChild( canvas2 );
+        texture = new THREE.Texture( canvas2 );
+        texture.needsUpdate = true;
+        
+        mapElement = new Object();
+        mapElement["name"]    = text;
+        mapElement["texture"] = texture;
+        textureNames.push(mapElement);
+        return  texture;      
+      }
+      
+      function createCube(text, color, x, y, z){
+          var materials = [];
+          for ( var j = 0; j < 6; j ++ ) {
+            materials.push( [ new THREE.MeshBasicMaterial({ map: createCanvasTexture(text), wireFrame:true}) ] );
+            //materials.push( [ new THREE.MeshBasicMaterial( { color: Math.random() * 0xffffff } ) ] );
+          }
+          cube = new THREE.Mesh( new THREE.CubeGeometry( 400, 200, 200, 1, 1, 1, materials ), new THREE.MeshFaceMaterial() );
+          cube.position.x = x;
+          cube.position.y = y;
+          cube.position.z = z;
+          cube.overdraw = true;
+          return cube;
+      }
+       function createTable(columnHeading, rowHeading, values){
+        var x = 0;
+        var y = 0;
+        var z = 0;
+        
+        for ( var i = 0; i < columnHeading.length; i ++ ) {
+          cube = createCube(columnHeading[i],"", x, y, z);
+          scene.addObject( cube );
+          x += 401;
+        }
+        x = -401;
+        y = -201;
+        
+        for ( var i = 0; i < rowHeading.length; i ++ ) {
+          cube = createCube(rowHeading[i],"", x, y, z);
+          scene.addObject( cube );
+          y -= 201;
+        }
+        
+        x = 0;
+        y = -201;
+        
+        for ( var i = 0; i < values.length; i ++ ) {
+          if(values[i] instanceof Array){
+            for ( var j = 0; j < values[i].length; j ++ ) {
+              cube = createCube(values[i][j],"", x, y, z);
+              scene.addObject( cube );
+            x += 401;
+            }
+          }else{
+            cube = createCube(values[i],"", x, y, z);
+            scene.addObject( cube );
+            x += 401;
+          }
+          x = 0;
+          y -= 201;
+        }
+      
+      }
+      
+      function init() {
+
+        container = document.createElement( 'div' );
+        document.body.appendChild( container );
+
+        var info = document.createElement( 'div' );
+        info.style.position = 'absolute';
+        info.style.top = '10px';
+        info.style.width = '100%';
+        info.style.textAlign = 'center';
+        info.innerHTML = 'OLAP Interface';
+        container.appendChild( info );
+        
+        camera = new THREE.Camera( 70, canvasWidth/ canvasHeight, 1, 10000 );
+        camera.position.y = -100;
+        camera.position.z = 2000;
+        camera.target.position.y = -100;
+
+        scene = new THREE.Scene();
+
+        
+        columnHeadings = [];
+        
+         #{js = ""
+         @columnNames.each {|col| js << "columnHeadings.push('#{col}');\n" }
+         js}
+         
+         rowHeadings = [];
+         #{js = ""
+         @rowNames.each {|row| js << "rowHeadings.push('#{row}');\n" }
+         js}
+        
+         values = [];
+         #{js = ""
+         @values.each{ |val| js << "values.push([#{val.join(',')}]);\n"  }
+         js}
+      
+        
+
+        
+        createTable(columnHeadings, rowHeadings, values);
+
+        renderer = new THREE.WebGLRenderer();
+        renderer.setSize( canvasWidth, canvasHeight );
+        renderer.domElement.style.border = "2px solid black";
+        container.appendChild( renderer.domElement );
+
+        stats = new Stats();
+        stats.domElement.style.position = 'absolute';
+        stats.domElement.style.top = '0px';
+        container.appendChild( stats.domElement );
+
+        //document.addEventListener( 'mousedown', onDocumentMouseDown, false );
+        //document.addEventListener( 'touchstart', onDocumentTouchStart, false );
+        //document.addEventListener( 'touchmove', onDocumentTouchMove, false );
+        
+        console.log(textureNames);
+      }
+
+
+      //
+
+      function animate() {
+
+        requestAnimationFrame( animate );
+
+        render();
+        stats.update();
+
+      }
+
+      function render() {
+
+        //cube.rotation.y += ( targetRotation - cube.rotation.y ) * 0.05;
+        renderer.render( scene, camera );
+
+      }
+
+ 
