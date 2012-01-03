@@ -13,8 +13,8 @@ require "json"
     :driver => 'mysql',
     :host => 'localhost',
     :database => 'cucubic',
-    :username => 'deploy',
-    :password => 'EOoXDc0FRm',
+    :username => 'YOUR_USERNAME',
+    :password => 'YOUR_PASSWORD',
     :schema => Schema::totalcube
   )
 
