@@ -1,9 +1,9 @@
 cucubic OLAP interface
 ======================
 
-### Enviroment ###
+### 1. Enviroment ###
 
-#### Server-side ####
+#### 1.1 Server-side ####
 
 
 - MySQL Community Server
@@ -16,14 +16,14 @@ cucubic OLAP interface
         mysql
         mondrian-olap (JRuby specific)
   
-#### Fronend-side ####
+#### 1.2 Fronend-side ####
 
 - three.js (r46)
 - jquery 1.7.1
 - tween.js
 - 
 
-### Usage ###
+### 2. Usage ###
 
 1. Install MySQL
 1. Create your star schema with SQL
