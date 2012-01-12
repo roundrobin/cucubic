@@ -10,10 +10,10 @@ cucubic OLAP interface
 (Current Generally Available Release: 5.5.19)
 
 - JRuby 1.6.5
-- Gems: sinatra
-        haml
-        json
-        mysql
+- Gems: sinatra,
+        haml,
+        json,
+        mysql,
         mondrian-olap (JRuby specific)
   
 #### 1.2 Fronend-side ####
