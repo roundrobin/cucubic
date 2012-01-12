@@ -1,4 +1,19 @@
-cucubic OLAP interface
+cucubic
+=======
+
+
+
+DESCRIPTION
+-----------
+
+One of the most popular open-source OLAP engines is [Mondrian](http://mondrian.pentaho.com). 
+
+USAGE
+-----
+
+### Schema definition
+
+
 ======================
 
 ### 1. Enviroment ###
