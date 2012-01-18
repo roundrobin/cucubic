@@ -1,15 +1,18 @@
 cucubic
 =======
 
-
-
 DESCRIPTION
 -----------
 
-One of the most popular open-source OLAP engines is [Mondrian](http://mondrian.pentaho.com). 
+This project examines the prototypical development of a browser-based user interface
+for the OLAP server Mondrian with the aid of modern web technologies like HTML5 and
+WebGL. With the development of the system could be demonstrated that a browser-based
+interface can be extended to three-dimensional aspects without relinquish common patterns
+of interaction in the context of OLAP. The three-dimensional arrangement of the data in the
+form of a cube and the implementation of OLAP operators such as slice, dice and pivoting are
+useful illustrations of future user interfaces in the field of business applications.
 
-USAGE
------
+
 
 ### Schema definition
 
@@ -36,7 +39,7 @@ USAGE
 - three.js (r46)
 - jquery 1.7.1
 - tween.js
-- 
+- DAT.GUI.min.js
 
 ### 2. Usage ###
 
