@@ -15,7 +15,10 @@ used in this project is [Threejs](https://github.com/mrdoob/three.js/) of the in
 
 ======================
 
-<a href="http://twitpic.com/88vmxy" title="Interface on Twitpic"><img src="http://twitpic.com/show/thumb/88vmxy.png" width="150" height="150" alt="Interface on Twitpic"></a>
+<div>
+<a style="float:right" href="http://twitpic.com/88vmxy" title="Interface on Twitpic"><img src="http://twitpic.com/show/thumb/88vmxy.png" width="150" height="150" alt="Interface on Twitpic"></a>
+<a href="http://twitpic.com/88vnro" title="View on Twitpic"><img src="http://twitpic.com/show/thumb/88vnro.png" width="150" height="150" alt="View on Twitpic"></a>
+</div>
 ### 1. Enviroment ###
 
 #### 1.1 Server-side ####
