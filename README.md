@@ -27,6 +27,7 @@ useful illustrations of future user interfaces in the field of business applicat
         haml,
         json,
         mysql,
+        bundler,
         mondrian-olap (JRuby specific)
   
 #### 1.2 Fronend-side ####
