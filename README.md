@@ -12,11 +12,6 @@ of interaction in the context of OLAP. The three-dimensional arrangement of the 
 form of a cube and the implementation of OLAP operators such as slice, dice and pivoting are
 useful illustrations of future user interfaces in the field of business applications.
 
-
-
-### Schema definition
-
-
 ======================
 
 ### 1. Enviroment ###
