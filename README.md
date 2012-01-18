@@ -5,12 +5,13 @@ DESCRIPTION
 -----------
 
 This project examines the prototypical development of a browser-based user interface
-for the OLAP server Mondrian with the aid of modern web technologies like HTML5 and
+for the OLAP server [Mondrian](http://mondrian.pentaho.com) with the aid of modern web technologies like HTML5 and
 WebGL. With the development of the system could be demonstrated that a browser-based
 interface can be extended to three-dimensional aspects without relinquish common patterns
 of interaction in the context of OLAP. The three-dimensional arrangement of the data in the
 form of a cube and the implementation of OLAP operators such as slice, dice and pivoting are
-useful illustrations of future user interfaces in the field of business applications.
+useful illustrations of future user interfaces in the field of business applications. The WebGL engine
+used in this project is [Threejs](https://github.com/mrdoob/three.js/) of the incredible Mr.Doob.
 
 ======================
 
