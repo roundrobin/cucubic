@@ -1,0 +1,194 @@
+create database dwh;
+use dwh;
+
+CREATE TABLE `facts`(
+	 id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	 order_type_id INT NOT NULL,
+	 call_input_channel_id INT NOT NULL, 
+     service_provider_id INT NOT NULL,
+     urgency_id INT NOT NULL,
+	 sla_id  INT NOT NULL,
+	 custom_cluster_1_id  INT NOT NULL,
+	 custom_cluster_2_id  INT NOT NULL,
+	 problemcode_id  INT NOT NULL,
+	 location_id  INT NOT NULL,
+	 customer_id INT NOT NULL,
+	 time_id  INT NOT NULL,
+	 device_id  INT NOT NULL,
+
+	 request_number INT,
+	 bearbeitungszeit_minuten float(7,2),
+	 seriennummer varchar(80),
+	 
+	 summary text,
+	 fehlerbehebung text,
+	 
+	 error_cause_text text,
+	 problem_description text
+);
+
+INSERT INTO facts(order_type_id, call_input_channel_id, service_provider_id, urgency_id, sla_id, custom_cluster_1_id,custom_cluster_2_id, problemcode_id, location_id,
+customer_id,  time_id, device_id, request_number, bearbeitungszeit_minuten, seriennummer, summary, fehlerbehebung, error_cause_text,problem_description) 
+VALUES(1,1,1,1,1,1,1,1,1,1,1,1,'1111111','0','5401A65551','','','','');
+
+CREATE TABLE `order_type`(
+id INT NOT NULL PRIMARY KEY,
+name char(20) not null
+);
+INSERT INTO order_type (id, name) VALUES('1', 'Trouble Ticket');
+INSERT INTO order_type (id, name) VALUES('2', 'Software');
+INSERT INTO order_type (id, name) VALUES('3', 'Hotline');
+INSERT INTO order_type (id, name) VALUES('4', 'Auftrag 1');
+INSERT INTO order_type (id, name) VALUES('5', 'Auftrag 2');
+/* Finish*/
+
+CREATE TABLE `trouble_type`(
+id INT NOT NULL PRIMARY KEY,
+name varchar(10)
+);
+INSERT INTO trouble_type(id, name) VALUES('1', 'Customer');
+INSERT INTO trouble_type(id, name) VALUES('2', 'Company');
+INSERT INTO trouble_type(id, name) VALUES('3', 'Goverment');
+/* Finish*/
+
+CREATE TABLE `call_input_channel`(
+id INT NOT NULL PRIMARY KEY,
+name char(6)
+);
+INSERT INTO call_input_channel (id, name) VALUES('1', 'HTTP');
+INSERT INTO call_input_channel (id, name) VALUES('2', 'PHONE');
+INSERT INTO call_input_channel (id, name) VALUES('3', 'WEB');
+INSERT INTO call_input_channel (id, name) VALUES('4', 'TWITTER');
+INSERT INTO call_input_channel (id, name) VALUES('5', 'FACEBOOK');
+INSERT INTO call_input_channel (id, name) VALUES('6', 'EMAIL');
+/* Finish*/
+
+
+CREATE TABLE `service_provider`(
+id INT NOT NULL PRIMARY KEY,
+name varchar(255)
+);
+INSERT INTO service_provider (id, name) VALUES('1', 'NORTH');
+INSERT INTO service_provider (id, name) VALUES('2', 'SOUTH');
+INSERT INTO service_provider (id, name) VALUES('3', 'WEST');
+INSERT INTO service_provider (id, name) VALUES('4', 'EAST');
+
+/* Finish*/
+CREATE TABLE `urgency`(
+id INT NOT NULL PRIMARY KEY,
+level varchar(20)
+);
+
+INSERT INTO urgency(id, level) VALUES('8', 'Low');
+INSERT INTO urgency(id, level) VALUES('9', 'Medium');
+INSERT INTO urgency(id, level) VALUES('18', 'High');
+INSERT INTO urgency(id, level) VALUES('19', 'Nicht definiert');
+/* Finish*/
+
+CREATE TABLE `sla`(
+id INT NOT NULL PRIMARY KEY,
+name varchar(20),
+minutes SMALLINT
+);
+
+INSERT INTO sla(id, name, minutes) VALUES('1', '4 Hours', '240' );
+INSERT INTO sla(id, name, minutes) VALUES('2', '8 Hours', '480' );
+INSERT INTO sla(id, name, minutes) VALUES('3', '12 Hours', '720' );
+INSERT INTO sla(id, name, minutes) VALUES('4', '16 Hours', '960' );
+INSERT INTO sla(id, name, minutes) VALUES('5', '24 Hours', '1440' );
+INSERT INTO sla(id, name, minutes) VALUES('6', '18 Hours', '1080' );
+INSERT INTO sla(id, name, minutes) VALUES('7', '36 Hours', '2160' );
+INSERT INTO sla(id, name, minutes) VALUES('8', '48 Hours', '2880' );
+INSERT INTO sla(id, name, minutes) VALUES('9', 'Not defined', '0' );
+/* Finish*/
+
+CREATE TABLE `custom_cluster_1`(
+id INT NOT NULL PRIMARY KEY,
+name char(15)
+);
+
+INSERT INTO custom_cluster_1(id, name) VALUES('1', 'Trouble');
+INSERT INTO custom_cluster_1(id, name) VALUES('2', 'Anwendung');
+INSERT INTO custom_cluster_1(id, name) VALUES('3', 'Lan/Telefonie');
+INSERT INTO custom_cluster_1(id, name) VALUES('4', 'Other');
+INSERT INTO custom_cluster_1(id, name) VALUES('5', 'Not defined');
+/* Finish*/
+
+
+CREATE TABLE `custom_cluster_2`(
+id INT NOT NULL PRIMARY KEY,
+name varchar(30)
+);
+
+INSERT INTO custom_cluster_2(id,name) VALUES('1','Cluster 1');
+INSERT INTO custom_cluster_2(id,name) VALUES('2','Cluster 2');
+INSERT INTO custom_cluster_2(id,name) VALUES('3','Cluster 3');
+INSERT INTO custom_cluster_2(id,name) VALUES('4','Cluster 4');
+INSERT INTO custom_cluster_2(id,name) VALUES('5','Cluster 5');
+INSERT INTO custom_cluster_2(id,name) VALUES('6','Cluster 6');
+INSERT INTO custom_cluster_2(id,name) VALUES('7','Cluster 7');
+INSERT INTO custom_cluster_2(id,name) VALUES('8','Cluster 8');
+INSERT INTO custom_cluster_2(id,name) VALUES('9','Cluster 9');
+INSERT INTO custom_cluster_2(id,name) VALUES('10','Cluster 10');
+INSERT INTO custom_cluster_2(id,name) VALUES('11','Cluster 11');
+
+
+
+
+CREATE TABLE `location`(
+	id INT NOT NULL PRIMARY KEY,
+	street VARCHAR(300),
+	postcode CHAR(5),
+	city VARCHAR(200),	
+	state VARCHAR(200),
+	country VARCHAR(200)
+);
+
+INSERT INTO location(id, street,postcode,state,country,city) VALUES('1','Mundsburger Damm 47','22087','Hamburg','Hamburg','DE');
+INSERT INTO location(id, street,postcode,state,country,city) VALUES('2','Unter den Linden 7','17109','Berlin','Berlin','DE');
+
+CREATE TABLE `customer`(
+	 id INT NOT NULL PRIMARY KEY,
+	 kdnr VARCHAR(100),
+	 street VARCHAR(200),
+	 city varchar(255),
+	 postcode varchar(10),
+	 state varchar(255),
+	 country varchar(255)
+);
+INSERT INTO customer(id, street, postcode, city, state, country, kdnr) VALUES('1','Kirchstr. 27','47198','Duisburg','Nordrhein-Westfalen','DE','XX000012');
+INSERT INTO customer(id, street, postcode, city, state, country, kdnr) VALUES('2','Kölnerstr.67','47807','Krefeld','Nordrhein-Westfalen','NL','XX000045');
+INSERT INTO customer(id, street, postcode, city, state, country, kdnr) VALUES('3','Gaensestr. 2','48231','Warendorf-Freckenhorst','Nordrhein-Westfalen','DE','XX000123');
+INSERT INTO customer(id, street, postcode, city, state, country, kdnr) VALUES('4','Treibstr. 30','44147','Dortmund','Nordrhein-Westfalen','DE','XX000112');
+
+
+
+
+CREATE TABLE `device`(
+	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	class varchar(20) NOT NULL,
+	materialtext varchar(300) NOT NULL
+);
+INSERT INTO device(id, class, materialtext) VALUES('1','Kasse','XYZ');
+INSERT INTO device(id, class, materialtext) VALUES('2','Kasse','Super Money 3000');
+INSERT INTO device(id, class, materialtext) VALUES('3','Kasse','The QueenPurse');
+
+
+
+CREATE TABLE time(
+	 id INT NOT NULL PRIMARY KEY,
+	 year int,
+	 month int,
+	day int,
+	cw int,
+	date date	
+
+);
+
+INSERT INTO time(id, year,month,day,cw,date) VALUES('1','2011','1','1','1','1.1.2011');
+INSERT INTO time(id, year,month,day,cw,date) VALUES('2','2011','1','2','2','2.1.2011');
+INSERT INTO time(id, year,month,day,cw,date) VALUES('3','2012','1','3','2','3.1.2011');
+INSERT INTO time(id, year,month,day,cw,date) VALUES('4','2012','1','4','2','4.1.2011');
+
+
+
