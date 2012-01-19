@@ -1,5 +1,5 @@
 module Schema
-  def self.totalcube
+  def self.example_schema
     Mondrian::OLAP::Schema.define do
        cube 'Calls' do
         table 'facts'
