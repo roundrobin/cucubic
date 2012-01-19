@@ -12,7 +12,7 @@ interface can be extended to three-dimensional aspects without relinquish common
 of interaction in the context of OLAP. The three-dimensional arrangement of the data in the
 form of a cube and the implementation of OLAP operators such as slice, dice and pivoting are
 useful illustrations of future user interfaces in the field of business applications. The WebGL engine
-used in this project is [Threejs](https://github.com/mrdoob/three.js/) of the incredible Mr.Doob.
+used in this project is [Three.js](https://github.com/mrdoob/three.js/) of the incredible Mr.Doob.
 
 ======================
 
@@ -52,6 +52,7 @@ used in this project is [Threejs](https://github.com/mrdoob/three.js/) of the in
 2. Import schema
 3. Create a mapping definition according to your star schema
    Tip: Hava a look on the mondrian-olap gem README docs
+
 
 4. Install JRuby 1.6.5
 5. Run "gem install bundler"
