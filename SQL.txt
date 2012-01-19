@@ -1,6 +1,3 @@
-create database dwh;
-use dwh;
-
 CREATE TABLE `facts`(
 	 id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	 order_type_id INT NOT NULL,
