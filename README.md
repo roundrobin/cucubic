@@ -11,7 +11,8 @@ interface can be extended to three-dimensional aspects without relinquish common
 of interaction in the context of OLAP. The three-dimensional arrangement of the data in the
 form of a cube and the implementation of OLAP operators such as slice, dice and pivoting are
 useful illustrations of future user interfaces in the field of business applications. The WebGL engine
-used in this project is [three.js](https://github.com/mrdoob/three.js/) of the incredible Mr.Doob.
+used in this project is [three.js](https://github.com/mrdoob/three.js/) of the incredible Mr.Doob. Besides thats,
+credits to Raimonds Simanovskis the creator of the amazing [mondrian-olap jruby](https://github.com/rsim/mondrian-olap) wrapper, which i used.
 
 ======================
 
