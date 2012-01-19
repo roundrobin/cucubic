@@ -65,4 +65,12 @@ used in this project is [three.js](https://github.com/mrdoob/three.js/) of the i
    ```
    bundle install
    ```
+7. Change Mondrian-olap configuration in server.rb<br>
+   This regards the name, user and passwort of the database<br>
+   Additional you set the path to the schema definition (See point 3.)
+
+8. Start the server
+   ```
+   ruby -S server.rb
+   ```   
 
