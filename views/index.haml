@@ -1,219 +1,168 @@
 !!! 5
 %html
   %head
-    %title
-      three.js canvas - geometry - cube
-    :css
-      body {
-        font-family: Monospace;
-        background-color: #f0f0f0;
-        margin: 0px;
-        overflow: hidden;
-      }
+    %title 
+      Cucubic 3D Interface
+    %link{:type=>"text/css", :href=>"/development-bundle/themes/base/jquery.ui.all.css", :rel=>"stylesheet"}
+    %link{:type=>"text/css", :href=>"/css/style.css", :rel=>"stylesheet"}
+    %script{:type=>"text/javascript", :src=>"/js/externalLibs/jquery-1.6.2.min.js"}    
   %body
-    
-     
-    #navigator{:style=>"float: right;margin-right: 30px;background-color: red;padding: 10px;"}
-      %h1
-        Navigator
-      - @dimensions.each do |dimension|
-        = dimension.name.to_s+"<br />"
-        - dimension.hierarchies.each do |hierachy|
-          - hierachy.level_names.each do |level|
-            = "-->"+level.to_s+"<br>"
+    Hello
+    %script{:type=>"text/javascript", :src=>"/js/externalLibs/Tween.js"}
+    %script{:type=>"text/javascript", :src=>"/js/externalLibs/Three.js"}
+    %script{:type=>"text/javascript", :src=>"/js/externalLibs/RequestAnimationFrame.js"}
+    %script{:type=>"text/javascript", :src=>"/js/externalLibs/Stats.js"}
+    %script{:type=>"text/javascript", :src=>"/js/externalLibs/microcache.js"}
+    %script{:type=>"text/javascript", :src=>"/js/externalLibs/THREEx.WindowResize.js"}
+    %script{:type=>"text/javascript", :src=>"/js/externalLibs/DAT.GUI.min.js"}
 
-    %script{:type=>"text/javascript", :src=>"../Three.js"}
-    %script{:type=>"text/javascript", :src=>"../js/RequestAnimationFrame.js"}
-    %script{:type=>"text/javascript", :src=>"../js/Stats.js"}
+    %script{:type=>"text/javascript", :src=>"/fonts/helvetiker_regular.typeface.js"}
+    %script{:type=>"text/javascript", :src=>"/fonts/gentilis_regular.typeface.js"}
+
+
+    
+    %script{:type=>"text/javascript", :src=>"/js/cucubic/CubeManager.js"}        
+
+    %script{:type=>"text/javascript", :src=>"/js/cucubic/Activities/CubeSelectionActivity.js"}
+    %script{:type=>"text/javascript", :src=>"/js/cucubic/Activities/BuildCubeActivity.js"}
+    %script{:type=>"text/javascript", :src=>"/js/cucubic/CameraMovement.js"}
+    %script{:type=>"text/javascript", :src=>"/js/cucubic/Factory.js"}
+    
+    %script{:type=>"text/javascript", :src=>"/js/cucubic/Datatypes/OLAPCube.js"}                       
+    %script{:type=>"text/javascript", :src=>"/js/cucubic/Datatypes/Dimension.js"}
+    %script{:type=>"text/javascript", :src=>"/js/cucubic/Datatypes/Hierarchy.js"}
+    %script{:type=>"text/javascript", :src=>"/js/cucubic/Datatypes/Level.js"}
+    %script{:type=>"text/javascript", :src=>"/js/cucubic/Datatypes/Member.js"}
+
+    %script{:type=>"text/javascript", :src=>"/js/cucubic/VisualComponents/Navigator.js"}
+    %script{:type=>"text/javascript", :src=>"/js/cucubic/VisualComponents/QueryBuilder.js"}
+    %script{:type=>"text/javascript", :src=>"/js/cucubic/VisualComponents/Cubic.js"} 
+    
+    
+    %script{:type=>"text/javascript", :src=>"/js/cucubic/Util/ScreenUtil.js"}         
+    %script{:type=>"text/javascript", :src=>"/js/cucubic/Util/MaterialUtil.js"}
+    %script{:type=>"text/javascript", :src=>"/js/cucubic/Util/Util.js"}      
+    %script{:type=>"text/javascript", :src=>"/js/cucubic/Util/TextureUtil.js"} 
+    %script{:type=>"text/javascript", :src=>"/js/cucubic/Util/SceneUtil.js"}
+    %script{:type=>"text/javascript", :src=>"/js/cucubic/Util/TweenUtil.js"}
+    %script{:type=>"text/javascript", :src=>"/js/cucubic/javascriptExtensions.js"}
+           
     :javascript
+            
       var container, stats;
-      var camera, scene, renderer;
-      var cube, plane;
+
+      var renderer;
+
+      var cubeManager; 
+
+      var canvasWidth  = window.innerWidth;
+      var canvasHeight = window.innerHeight;
+
       var targetRotation = 0;
       var targetRotationOnMouseDown = 0;
+
       var mouseX = 0;
       var mouseXOnMouseDown = 0;
-      var canvasWidth = 1000;
-      var canvasHeight = 800;
-      var windowHalfX = canvasWidth / 2;
-      var windowHalfY = canvasHeight / 2;
-      var textureNames = [];
-      
+
+      var windowHalfX = window.innerWidth / 2;
+      var windowHalfY = window.innerHeight / 2;
+
+      var urlParams = window.location.href.split("/");
+
+      var TOOGLEFLAG = 1;
+
+      var rot     = 0xED5C2D;
+      var grau    = 0xF1EFD8;
+      var blau    = 0x007A6F;
+      var violett = 0x007A6F;
+      var gelb    = 0xcda869;
+      var senf    = 0xCED73E;
+
+
       init();
       animate();
-      
-      function createCanvasTexture(text){
-        
+      startCucubic();
 
-        for (var i = 0; i < textureNames.length; i++) {
-          if( textureNames[i]["name"] == text ){
-             return textureNames[i]["texture"];
-          }
-        }
-        
-        
-        var canvas2     = document.createElement("canvas");
-        canvas2.id      = "number";
-        canvas2.style.width = "100px";
-        canvas2.style.height = "100px";
-        var context     = canvas2.getContext("2d");
-        var x           = canvas2.width / 2; var y = canvas2.height / 2;
-        context.font    = "50pt Arial";
-        color = 130;
-        context.textAlign = "center";
-        context.fillStyle = "#889988";
-        context.fillRect(0,0,300,300);
-  
-          // assign gradients to fill
-          //context.fillStyle = objGradient;
-  
-          // draw 600x600 fill
-          context.fillRect(0,0,600,600);
-          context.fillStyle = "black";
-          context.fillText(text+"", x, y);
-          context.save();
-        
-
-        //document.body.appendChild( canvas2 );
-        texture = new THREE.Texture( canvas2 );
-        texture.needsUpdate = true;
-        
-        mapElement = new Object();
-        mapElement["name"]    = text;
-        mapElement["texture"] = texture;
-        textureNames.push(mapElement);
-        return  texture;      
-      }
-      
-      function createCube(text, color, x, y, z){
-          var materials = [];
-          for ( var j = 0; j < 6; j ++ ) {
-            materials.push( [ new THREE.MeshBasicMaterial({ map: createCanvasTexture(text), wireFrame:true}) ] );
-            //materials.push( [ new THREE.MeshBasicMaterial( { color: Math.random() * 0xffffff } ) ] );
-          }
-          cube = new THREE.Mesh( new THREE.CubeGeometry( 400, 200, 200, 1, 1, 1, materials ), new THREE.MeshFaceMaterial() );
-          cube.position.x = x;
-          cube.position.y = y;
-          cube.position.z = z;
-          cube.overdraw = true;
-          return cube;
-      }
-       function createTable(columnHeading, rowHeading, values){
-        var x = 0;
-        var y = 0;
-        var z = 0;
-        
-        for ( var i = 0; i < columnHeading.length; i ++ ) {
-          cube = createCube(columnHeading[i],"", x, y, z);
-          scene.addObject( cube );
-          x += 401;
-        }
-        x = -401;
-        y = -201;
-        
-        for ( var i = 0; i < rowHeading.length; i ++ ) {
-          cube = createCube(rowHeading[i],"", x, y, z);
-          scene.addObject( cube );
-          y -= 201;
-        }
-        
-        x = 0;
-        y = -201;
-        
-        for ( var i = 0; i < values.length; i ++ ) {
-          if(values[i] instanceof Array){
-            for ( var j = 0; j < values[i].length; j ++ ) {
-              cube = createCube(values[i][j],"", x, y, z);
-              scene.addObject( cube );
-            x += 401;
-            }
-          }else{
-            cube = createCube(values[i],"", x, y, z);
-            scene.addObject( cube );
-            x += 401;
-          }
-          x = 0;
-          y -= 201;
-        }
-      
-      }
-      
       function init() {
+        
 
+        // Configure application
         container = document.createElement( 'div' );
         document.body.appendChild( container );
 
-        var info = document.createElement( 'div' );
-        info.style.position = 'absolute';
-        info.style.top = '10px';
-        info.style.width = '100%';
-        info.style.textAlign = 'center';
-        info.innerHTML = 'OLAP Interface';
-        container.appendChild( info );
-        
-        camera = new THREE.Camera( 70, canvasWidth/ canvasHeight, 1, 10000 );
-        camera.position.y = -100;
-        camera.position.z = 2000;
-        camera.target.position.y = -100;
-
-        scene = new THREE.Scene();
-
-        
-        columnHeadings = [];
-        
-         #{js = ""
-         @columnNames.each {|col| js << "columnHeadings.push('#{col}');\n" }
-         js}
-         
-         rowHeadings = [];
-         #{js = ""
-         @rowNames.each {|row| js << "rowHeadings.push('#{row}');\n" }
-         js}
-        
-         values = [];
-         #{js = ""
-         @values.each{ |val| js << "values.push([#{val.join(',')}]);\n"  }
-         js}
-      
-        
-
-        
-        createTable(columnHeadings, rowHeadings, values);
-
-        renderer = new THREE.WebGLRenderer();
+        var sceneUtil  = new CUBE.SceneUtil(new THREE.Scene());    
+        var projector  = new THREE.Projector();
+        var camera     = new CUBE.Factory.createCamera(4000 ,60, canvasWidth, canvasHeight, 1, 20000);
+        var screenUtil = new CUBE.ScreenUtil(canvasWidth, camera, 60, canvasWidth/ canvasHeight );
+        var tweenUtil  = new CUBE.TweenUtil();
+        var gui        = null; //new DAT.GUI();
+        var light      = null; //new THREE.DirectionalLight( 0xffff00 );
+        renderer       = new THREE.WebGLRenderer( { antialias: true } );
+            
         renderer.setSize( canvasWidth, canvasHeight );
         renderer.domElement.style.border = "2px solid black";
+        renderer.domElement.style.backgroundColor = "#F1EFD8";
+        renderer._microCache = new MicroCache();
+
+
+        cubeManager = new CUBE.CubeManager(sceneUtil, camera, projector, renderer, screenUtil, gui, light, tweenUtil);
+            
         container.appendChild( renderer.domElement );
 
         stats = new Stats();
         stats.domElement.style.position = 'absolute';
-        stats.domElement.style.top = '0px';
+        stats.domElement.style.top      = '0px';
         container.appendChild( stats.domElement );
 
-        //document.addEventListener( 'mousedown', onDocumentMouseDown, false );
-        //document.addEventListener( 'touchstart', onDocumentTouchStart, false );
-        //document.addEventListener( 'touchmove', onDocumentTouchMove, false );
-        
-        console.log(textureNames);
       }
 
+      function startCucubic(){
+            console.log(urlParams);
+            
+            // Remove protocol and hostname and blank entries
+            urlParams.remove(0);
+            urlParams.remove(0);
+            urlParams.remove(0);
+            urlParams.remove(0);
+
+            console.log(urlParams);
+
+            
+            if ( urlParams[0] == "BuildCube" ) {
+
+              var queryParams = [];
+
+              for ( var i = 6; i < urlParams.length; i ++ ) {
+                
+                queryParams.push(urlParams[i]);
+              
+              }
+                
+              currentActivity = new CUBE.BuildCubeActivity(cubeManager, null, urlParams[1]);
+              currentActivity.init(queryParams);
+
+              
+            } else {
+
+              currentActivity = new CUBE.CubeSelectionActivity(cubeManager);
+              currentActivity.init(["Calls","Demo 1","Demo 2","Demo 3","Demo 4","Demo 5","Demo 6"]);
+
+            }
+
+      }
 
       //
 
       function animate() {
 
         requestAnimationFrame( animate );
-
+        TWEEN.update();
         render();
         stats.update();
 
       }
 
       function render() {
-
-        //cube.rotation.y += ( targetRotation - cube.rotation.y ) * 0.05;
-        renderer.render( scene, camera );
+        renderer.render( cubeManager.sceneUtil.scene, cubeManager.camera );
 
       }
-
- 

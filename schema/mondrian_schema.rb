@@ -26,7 +26,7 @@ module Schema
            end
          end
        
-           dimension 'OrderType', :foreign_key => 'order_type_id' do
+        dimension 'OrderType', :foreign_key => 'order_type_id' do
            hierarchy :has_all => true, :all_member_name => 'All order types', :primary_key => 'id' do
             table 'order_type'
             level 'Name', :column => 'name', :unique_members => true
@@ -53,11 +53,13 @@ module Schema
             level 'Year', :column => 'year', :type => 'Numeric', :unique_members => true, :level_type => 'TimeYears'
             level 'Month', :column => 'month', :type => 'Numeric', :unique_members => false, :level_type => 'TimeMonths'
           end
+
           hierarchy 'Weekly', :has_all => false, :primary_key => 'id' do
             table 'time'
             level 'Year', :column => 'year', :type => 'Numeric', :unique_members => true, :level_type => 'TimeYears'
             level 'Week', :column => 'cw', :type => 'Numeric', :unique_members => false, :level_type => 'TimeWeeks'
           end
+
         end
          
     
@@ -97,8 +99,8 @@ module Schema
          
      
          
-        #measure 'Dauer', :column => 'bearbeitungszeit_minuten', :aggregator => 'sum'
-        measure 'Anzahl', :column => 'request_number', :aggregator => 'count', :format_string => "#,###"
+        
+        measure 'Count', :column => 'request_number', :aggregator => 'count', :format_string => "#,###"
         end
     end
   end

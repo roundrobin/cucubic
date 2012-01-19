@@ -201,7 +201,8 @@ CUBE.Factory.createText = function(text, size, height, color){
 	});
 	
 	text3d.computeBoundingBox();
-	var centerOffset = -0.5 * ( text3d.boundingBox.x[ 1 ] - text3d.boundingBox.x[ 0 ] );
+	//text3d.boundingBox.x[ 1 ] - text3d.boundingBox.x[ 0 ]
+	var centerOffset = -0.5 * ( text3d.boundingBox.max.x - text3d.boundingBox.min.x  );
 	
 	var textMaterial = new THREE.MeshBasicMaterial( { color: color, wireframe: false } );
 	text = new THREE.Mesh( text3d, textMaterial );
@@ -249,10 +250,11 @@ CUBE.Factory.createPlane = function(width, height, raster1, raster2, visible, cu
     return plane;
 }
 
-CUBE.Factory.createCamera = function(fov, canvasWidth, canvasHeight, near, far){
-	var camera = new THREE.Camera( fov, canvasWidth/ canvasHeight, near, far);
-    camera.position.z = 4000;
+CUBE.Factory.createCamera = function(cameraPositionZ, fov, canvasWidth, canvasHeight, near, far ){
+	camera = new THREE.PerspectiveCamera( fov, canvasWidth / canvasHeight, near, far );
+    camera.position.z = cameraPositionZ;
     camera.useTarget = false;
+
     return camera;
 	
 }

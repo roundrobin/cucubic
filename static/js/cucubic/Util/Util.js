@@ -7,7 +7,7 @@ CUBE.Util.longestText = function(cubesWithText){
 	    for ( var i = 0; i < cubesWithText.length; i ++ ) {
 			text = cubesWithText[i].geometry;
 	    	text.computeBoundingBox();
-	        size = (text.boundingBox.x[0] > 0) ? Math.abs(text.boundingBox.x[0] - text.boundingBox.x[1]) : Math.abs(text.boundingBox.x[0] + text.boundingBox.x[1]);
+	        size = (text.boundingBox.min.x > 0) ? Math.abs(text.boundingBox.min.x - text.boundingBox.max.x) : Math.abs(text.boundingBox.min.x + text.boundingBox.max.x);
 	        if(longestText < size){
 				longestText = size;				           		
 	        }

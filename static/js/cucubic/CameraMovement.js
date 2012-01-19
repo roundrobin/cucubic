@@ -10,30 +10,34 @@ CUBE.CameraMovement.moveToCenter = function(containerCube,containerText,cubeMana
 	var smY = hY = containerCube[0].position.y;
 	
   	for ( var i = 0; i < containerCube.length; i ++ ) {
+
 		var smXTemp = containerCube[i].position.x;
 		var smYTemp = containerCube[i].position.y;
 		containerCube[i].geometry.computeBoundingBox();
 		
-		var bBoxCube = containerCube[i].geometry.boundingBox;
-		var widthCube = Math.abs(bBoxCube.x[0]-bBoxCube.x[1]);
-		var heightCube = Math.abs(bBoxCube.y[0]-bBoxCube.y[1]);
+		var bBoxCube   = containerCube[i].geometry.boundingBox;
+		var widthCube  = Math.abs(bBoxCube.min.x-bBoxCube.max.x);
+		var heightCube = Math.abs(bBoxCube.min.y-bBoxCube.max.y);
 		
 		var hXTemp = smXTemp + widthCube;
 		var hYTemp = smYTemp + heightCube;
   		
-  		if(smX > smXTemp ){ smX = smXTemp;}
-  		if(smY > smYTemp ){ smY = smYTemp;}
-  		if(hX < hXTemp ){ hX = hXTemp;}
-  		if(hY < hYTemp ){ hY = hYTemp;}
-  		if(containerText){
+  		if (smX > smXTemp ) { smX = smXTemp; }
+  		if (smY > smYTemp ) { smY = smYTemp; }
+  		if (hX < hXTemp ) { hX = hXTemp; }
+  		if (hY < hYTemp ) { hY = hYTemp; }
+
+  		if ( containerText ) {
+  			
 	  		var smXTemp = containerText[i].position.x;
 			var smYTemp = containerText[i].position.y;
 			var smZTemp = containerText[i].position.z;
 			
 			containerText[i].geometry.computeBoundingBox();
-			var bBoxText = containerText[i].geometry.boundingBox;
-			var widthText = Math.abs(bBoxText.x[0]-bBoxText.x[1]);
-			var heightText = Math.abs(bBoxText.y[0]-bBoxText.y[1]);
+
+			var bBoxText   = containerText[i].geometry.boundingBox;
+			var widthText  = Math.abs(bBoxText.min.x - bBoxText.max.x);
+			var heightText = Math.abs(bBoxText.min.y - bBoxText.max.y);
 			
 			var hXTemp = smXTemp + widthText;
 			var hYTemp = smYTemp + heightText;

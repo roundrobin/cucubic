@@ -12,7 +12,7 @@ CUBE.SceneUtil = function(scene) {
 
 CUBE.SceneUtil.prototype = {
 	clear : function(){
-		this.scene.clear();
+		//this.scene.clear();
 	},
 	add : function(object){
 	    if(!object.clickable){
@@ -26,7 +26,7 @@ CUBE.SceneUtil.prototype = {
 	    }
 	    
 	    this.allObjects.push(object);
-		this.scene.addObject(object);
+		this.scene.add(object);
 	},
 	remove : function(object){
 	    if(!object.draggable){
