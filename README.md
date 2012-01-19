@@ -47,7 +47,6 @@ used in this project is [Threejs](https://github.com/mrdoob/three.js/) of the in
 
 1. Install MySQL
 1. Create your star schema with SQL
-
    Tip: [Have look on the example schema](https://github.com/roundrobin/cucubic/blob/master/schema/mondrian_schema.rb)
 2. Import schema
 3. Create a mapping definition according to your star schema
