@@ -7,7 +7,6 @@
     %link{:type=>"text/css", :href=>"/css/style.css", :rel=>"stylesheet"}
     %script{:type=>"text/javascript", :src=>"/js/externalLibs/jquery-1.6.2.min.js"}    
   %body
-    Hello
     %script{:type=>"text/javascript", :src=>"/js/externalLibs/Tween.js"}
     %script{:type=>"text/javascript", :src=>"/js/externalLibs/Three.js"}
     %script{:type=>"text/javascript", :src=>"/js/externalLibs/RequestAnimationFrame.js"}
@@ -49,27 +48,20 @@
            
     :javascript
             
-      var container, stats;
-
-      var renderer;
-
-      var cubeManager; 
+      var container, stats, renderer, cubeManager;
 
       var canvasWidth  = window.innerWidth;
       var canvasHeight = window.innerHeight;
 
-      var targetRotation = 0;
-      var targetRotationOnMouseDown = 0;
-
-      var mouseX = 0;
+      var targetRotation    = 0;
       var mouseXOnMouseDown = 0;
+      var mouseX            = 0;
+      var targetRotationOnMouseDown = 0;
 
       var windowHalfX = window.innerWidth / 2;
       var windowHalfY = window.innerHeight / 2;
-
-      var urlParams = window.location.href.split("/");
-
-      var TOOGLEFLAG = 1;
+      var urlParams   = window.location.href.split("/");
+      var TOOGLEFLAG  = 1;
 
       var rot     = 0xED5C2D;
       var grau    = 0xF1EFD8;
@@ -78,6 +70,14 @@
       var gelb    = 0xcda869;
       var senf    = 0xCED73E;
 
+
+      //Extension of Three.js Object
+      THREE.Object3D.prototype.draggable = false;
+      THREE.Object3D.prototype.clickable = false;
+      THREE.Object3D.prototype.dragged   = false;
+      THREE.Object3D.prototype.rotatable = false;
+      THREE.Object3D.prototype.onTarget  = false;
+      THREE.Object3D.prototype.moveOnTreeUpdate = true;
 
       init();
       animate();
@@ -163,6 +163,7 @@
       }
 
       function render() {
+
         renderer.render( cubeManager.sceneUtil.scene, cubeManager.camera );
 
       }
