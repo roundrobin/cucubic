@@ -47,10 +47,11 @@ used in this project is [three.js](https://github.com/mrdoob/three.js/) of the i
 
 1. Install MySQL
 1. Create your star schema with SQL<br>
-   Tip: [Have look on the example schema](https://github.com/roundrobin/cucubic/blob/master/SQL.txt)
+   Tip: [Have look on the example schema](https://github.com/roundrobin/cucubic/blob/master/SQL.txt)<br>
+   To test cucubic you can use the example schema
 2. Import the SQL schema into your MySQL Server<BR>
    ```
-     mysql -u USERNAME -p -h DBSERVER dbname < YOUR_STATEMENT_FILE.sql 
+     mysql -u USERNAME -p -h DBSERVER DBNAME < YOUR_STATEMENT_FILE.sql 
    ```
 3. Create a mapping definition according to your SQL star schema<br>
    Put the mapping file in the "schema" folder<br>
