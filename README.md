@@ -50,7 +50,7 @@ used in this project is [three.js](https://github.com/mrdoob/three.js/) of the i
    Tip: [Have look on the example schema](https://github.com/roundrobin/cucubic/blob/master/SQL.txt)
 2. Import the SQL schema into your MySQL Server
 3. Create a mapping definition according to your SQL star schema<br>
-   Put the mapping file in the "schema" folder
+   Put the mapping file in the "schema" folder<br>
    Tip: [Hava a look on the mondrian-olap gem README docs](https://github.com/rsim/mondrian-olap/blob/master/README.md)
 
 4. Install JRuby 1.6.5
