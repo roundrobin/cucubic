@@ -49,6 +49,10 @@ used in this project is [three.js](https://github.com/mrdoob/three.js/) of the i
 1. Create your star schema with SQL<br>
    Tip: [Have look on the example schema](https://github.com/roundrobin/cucubic/blob/master/SQL.txt)
 2. Import the SQL schema into your MySQL Server
+
+   mysql -u USERNAME -p -h DBSERVER dbname < YOUR_STATEMENT_FILE.sql
+
+3. mysql -p -h DBSERVER dbname < dbname.sql
 3. Create a mapping definition according to your SQL star schema<br>
    Put the mapping file in the "schema" folder<br>
    Tip: [Hava a look on the mondrian-olap gem README docs](https://github.com/rsim/mondrian-olap/blob/master/README.md)
@@ -56,3 +60,4 @@ used in this project is [three.js](https://github.com/mrdoob/three.js/) of the i
 4. Install JRuby 1.6.5
 5. Run "gem install bundler"
 6. Run "bundle install"
+
